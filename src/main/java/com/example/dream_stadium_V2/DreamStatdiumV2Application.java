@@ -1,4 +1,4 @@
-package com.example.dream_statdium_v2;
+package com.example.dream_stadium_V2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
