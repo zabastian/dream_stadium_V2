@@ -46,4 +46,8 @@ public class User {
         user.loginType = loginType;
         return user;
     }
+
+    public static User login(String email, String password) {
+        return new User(email, password);
+    }
 }
