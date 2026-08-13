@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -47,7 +47,7 @@ public class User {
         return user;
     }
 
-    public static User login(String email, String password) {
+  /*  public static User login(String email, String password) {
         return new User(email, password);
-    }
+    }*/
 }
