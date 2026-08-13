@@ -3,7 +3,9 @@ package com.example.dream_stadium_V2.common.auth.service;
 import com.example.dream_stadium_V2.common.auth.dto.AuthLoginRequestDto;
 import com.example.dream_stadium_V2.common.auth.dto.AuthLoginResponseDto;
 import com.example.dream_stadium_V2.common.auth.dto.AuthSignUpRequestDto;
+import com.example.dream_stadium_V2.common.auth.recaptcha.RecaptchaService;
 import com.example.dream_stadium_V2.common.auth.repository.AuthRepository;
+import com.example.dream_stadium_V2.common.user.entity.LoginType;
 import com.example.dream_stadium_V2.common.user.entity.User;
 import com.example.dream_stadium_V2.global.exception.BaseException;
 import com.example.dream_stadium_V2.global.exception.ErrorCode;
@@ -26,8 +28,9 @@ import java.time.temporal.ChronoUnit;
         private final PasswordEncoder passwordEncoder;
         private final TokenService tokenService;
         private final RefreshTokenRepository refreshTokenRepository;
+    private final RecaptchaService recaptchaService;
 
-        public void authSignUpService(AuthSignUpRequestDto dto) {
+    public void authSignUpService(AuthSignUpRequestDto dto) {
             User user = User.create(
                     dto.getEmail(),
                     passwordEncoder.encode(dto.getPassword()),
@@ -40,12 +43,20 @@ import java.time.temporal.ChronoUnit;
         }
 
         public AuthLoginResponseDto authLoginService(AuthLoginRequestDto dto) {
+
             User user = authRepository.findByEmail(dto.getEmail())
                     .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 
-            if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-                throw new BaseException(ErrorCode.LOGIN_FAILED);
+            if (user.getLoginType() == LoginType.LOCAL) {
+                if (!recaptchaService.verify(dto.getRecaptchaToken())) {
+                    throw new BaseException(ErrorCode.RECAPTCHA_FAILED);
+                }
+
+                if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+                    throw new BaseException(ErrorCode.LOGIN_FAILED);
+                }
             }
+
 
             String accessToken = tokenService.createAccessToken(user.getId(), user.getUserRole());
             String refreshToken = tokenService.createRefreshToken();

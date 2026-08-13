@@ -8,4 +8,6 @@ public class AuthLoginRequestDto {
     private String email;
 
     private String password;
+
+    private String recaptchaToken;
 }

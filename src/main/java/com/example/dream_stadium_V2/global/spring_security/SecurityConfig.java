@@ -34,7 +34,7 @@ public class SecurityConfig {
                 )
                 .formLogin(login -> login.disable()) // 기본 제공되는 form 기반 로그인 화면을 사용하지 않겠다
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/auth/signUp", "/auth/login","/auth/refresh","/oauth2/**", "/login/**").permitAll()
+                                .requestMatchers("/auth/signUp", "/auth/login","/auth/refresh","/oauth2/**", "/login/**", "/recaptcha").permitAll()
                                 .requestMatchers("/owner/**").hasRole("OWNER") // "ROLE_CUSTOMER" 권한을 갖고 있어야 함
                                 .requestMatchers("/customer/**").hasRole("CUSTOMER") // "ROLE_CUSTOMER" 권한을 갖고 있어야 함
 //                                .requestMatchers(HttpMethod.POST, "/owner/**").hasRole("OWNER")
