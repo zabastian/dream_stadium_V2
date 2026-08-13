@@ -20,7 +20,7 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "nickname", unique = true, nullable = false)
@@ -45,6 +45,18 @@ public class User {
         user.userRole = userRole;
         user.loginType = loginType;
         return user;
+    }
+
+    public static User createNaverUser(String email, String nickname, UserRole userRole, LoginType loginType) {
+        User user = new User();
+        user.email = email;
+        user.password = "";
+        user.nickname = nickname;
+        user.deleted = false;
+        user.userRole = userRole;
+        user.loginType = loginType;
+        return user;
+
     }
 
   /*  public static User login(String email, String password) {

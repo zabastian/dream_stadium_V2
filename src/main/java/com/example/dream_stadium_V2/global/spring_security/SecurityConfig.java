@@ -1,5 +1,7 @@
 package com.example.dream_stadium_V2.global.spring_security;
 
+import com.example.dream_stadium_V2.common.auth.oauth.CustomOAuth2UserService;
+import com.example.dream_stadium_V2.common.auth.oauth.OAuth2SuccessHandler;
 import com.example.dream_stadium_V2.global.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { // HttpSecurity 설정 중 예외 가능성을 선언한 것
@@ -30,7 +34,7 @@ public class SecurityConfig {
                 )
                 .formLogin(login -> login.disable()) // 기본 제공되는 form 기반 로그인 화면을 사용하지 않겠다
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/auth/signUp", "/auth/login","/auth/refresh").permitAll()
+                                .requestMatchers("/auth/signUp", "/auth/login","/auth/refresh","/oauth2/**", "/login/**").permitAll()
                                 .requestMatchers("/owner/**").hasRole("OWNER") // "ROLE_CUSTOMER" 권한을 갖고 있어야 함
                                 .requestMatchers("/customer/**").hasRole("CUSTOMER") // "ROLE_CUSTOMER" 권한을 갖고 있어야 함
 //                                .requestMatchers(HttpMethod.POST, "/owner/**").hasRole("OWNER")
@@ -39,6 +43,14 @@ public class SecurityConfig {
 //                                .requestMatchers(HttpMethod.PUT, "/owner/**").hasRole("OWNER")
                                 .anyRequest().authenticated()
                 )
+
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo ->
+                                userInfo.userService(customOAuth2UserService)
+                        )
+                        .successHandler(oAuth2SuccessHandler)
+                )
+
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
                 /*  Spring Security 필터 체인에서의 순서 예시

@@ -38,6 +38,8 @@ dependencies {
     // DecodedJWT 사용
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     // @Valid및 NotBlank 사용
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    // 네이버 Oauth2.0 연결
 }
 
 tasks.named('test') {
