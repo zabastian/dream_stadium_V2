@@ -2,14 +2,13 @@ package com.example.dream_stadium_V2.common.auth.controller;
 
 import com.example.dream_stadium_V2.common.auth.cookie.CookieUtil;
 import com.example.dream_stadium_V2.common.auth.dto.AuthLoginRequestDto;
-import com.example.dream_stadium_V2.common.auth.dto.AuthLoginResponseDto;
+import com.example.dream_stadium_V2.common.auth.dto.AuthLoginResponseTokenDto;
 import com.example.dream_stadium_V2.common.auth.dto.AuthSignUpRequestDto;
 import com.example.dream_stadium_V2.common.auth.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,17 +30,19 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthLoginResponseDto> loginController(
+    public ResponseEntity<AuthLoginResponseTokenDto> loginController(
             @Valid @RequestBody AuthLoginRequestDto authLoginRequestDto,
             HttpServletResponse response
     ) {
-        AuthLoginResponseDto authLoginResponseDto = authService.authLoginService(authLoginRequestDto);
+        AuthLoginResponseTokenDto authLoginResponseDto = authService.authLoginService(authLoginRequestDto);
 
         Cookie accessTokenCookie = CookieUtil.createCookie(authLoginResponseDto.getAccessToken());
+        Cookie refreshTokenCookie = CookieUtil.createRefreshCookie(authLoginResponseDto.getRefreshToken());
 
         response.addCookie(accessTokenCookie);
+        response.addCookie(refreshTokenCookie);
 
-        return ResponseEntity.ok(authLoginResponseDto);
+        return ResponseEntity.ok().build();
     }
 
 }

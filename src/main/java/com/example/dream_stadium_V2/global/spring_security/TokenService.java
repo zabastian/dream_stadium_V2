@@ -59,8 +59,10 @@ public class TokenService {
 
     @Transactional //자동 try-catch + rollback + commit
     public TokenResponse refreshTokens(String oldRefreshToken) {
+
         RefreshToken tokenEntity = refreshTokenRepository.findByToken(oldRefreshToken)
                 .orElseThrow(() -> new BaseException(ErrorCode.LOGIN_FAILED));
+
         if(tokenEntity.isExpired()) {
             refreshTokenRepository.delete(tokenEntity);
             throw new BaseException(ErrorCode.TOKEN_IS_EXPIRED);
@@ -74,17 +76,13 @@ public class TokenService {
         refreshTokenRepository.delete(tokenEntity);
         refreshTokenRepository.save(newTokenEntity);
 
-
-//        tokenEntity.setToken(newRefreshToken);
-//        tokenEntity.setExpiryDate(Instant.now().plus(30,ChronoUnit.DAYS));
-//        refreshTokenRepository.save(tokenEntity);
-
         return new TokenResponse(newAccessToken,newRefreshToken);
     }
 
     /*
         public long verifyToken(String bearerToken) {
     */
+
     public DecodedJWT verifyToken(String bearerToken) {
 
         try {

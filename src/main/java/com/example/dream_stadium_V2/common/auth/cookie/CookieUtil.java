@@ -16,4 +16,16 @@ public class CookieUtil {
         return cookie;
 
     }
+
+    public static Cookie createRefreshCookie(String refreshToken) {
+
+        Cookie cookie = new Cookie("refreshToken", refreshToken);
+
+        cookie.setPath("/");
+        cookie.setMaxAge(3600);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+
+        return cookie;
+    }
 }
