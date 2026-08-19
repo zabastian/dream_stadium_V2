@@ -1,5 +1,9 @@
 # 1단계: 빌드 jdk라는 이미지를 통해 빌드 --> builde로 이름 만듬
-FROM gradle:8.7-jdk17 AS build
+
+#------------20260817 gradle 버전 grdle-wrapper.properties에 맞게 수정 완료
+# FROM gradle:8.7-jdk17 AS build
+
+FROM gradle:9.5.1-jdk17 AS build
 WORKDIR /app
 
 #이 파일 변경되면 docker캐시 무효화하고 빌드한다.
