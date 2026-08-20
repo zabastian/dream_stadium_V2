@@ -8,12 +8,14 @@ import com.example.dream_stadium_V2.global.exception.ErrorCode;
 import com.example.dream_stadium_V2.owner.user.dto.OwnerResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OwnerService {
 
     private final AuthRepository authRepository;
