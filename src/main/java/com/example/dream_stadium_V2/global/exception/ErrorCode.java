@@ -10,7 +10,8 @@ public enum ErrorCode {
     LOGIN_FAILED("로그인에 실패했습니다.", HttpStatus.UNAUTHORIZED, 2),
     TOKEN_IS_EXPIRED("토큰이 이미 만료되었습니다..", HttpStatus.UNAUTHORIZED, 3),
     RECAPTCHA_FAILED("구글 검증 로직에 걸렸습니다.", HttpStatus.UNAUTHORIZED,4),
-    STADIUM_NOT_FOUND("해당 경기장을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,5);
+    STADIUM_NOT_FOUND("해당 경기장을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,5),
+    TEAM_NOT_FOUND("해당 팀을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,6);
 
     private final String message;
     private final HttpStatus httpStatus;
