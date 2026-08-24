@@ -11,6 +11,6 @@ public interface StadiumRepository extends JpaRepository<Stadium, Long> {
 
     Optional<Stadium> findById(Long id);
 
-    List<Stadium> findAllByUser(User user);
+    List<Stadium> findAllByUserId(Long id);
 
 }

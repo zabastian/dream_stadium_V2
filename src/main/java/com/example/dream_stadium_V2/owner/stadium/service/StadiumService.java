@@ -82,10 +82,10 @@ public class StadiumService {
     }
 
     public List<StadiumResponseDto> selectListStadium(Long userId) {
-        User user = authRepository.findById(userId)
-                .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+        /*User user = authRepository.findById(userId)
+                .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));*/
 
-        List<Stadium> stadiumList = stadiumRepository.findAllByUser(user);
+        List<Stadium> stadiumList = stadiumRepository.findAllByUserId(userId);
 
         List<StadiumResponseDto> stadiumListEmpty = new ArrayList<>();
 
