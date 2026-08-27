@@ -10,7 +10,39 @@ services:
 
   app:
     build: .
+    container_name: dream-stadium-app
     ports:
       - "8080:8080"
     depends_on:
       - mysql
+# application.yml이 localhost 일 때 docker compose up -d 만 해도 된다
+
+#  1. IntelliJ 실행
+#  Spring Boot(내 Mac)
+#  ↓
+#  localhost:3306
+#  ↓
+#  Docker MySQL
+#
+#  → 정상 작동
+#
+#  2. Docker Compose로 app 실행
+#  Spring Boot(app 컨테이너)
+#  ↓
+#  localhost:3306 ❌
+#  ↓
+#  app 컨테이너 자기 자신
+#
+#  → DB 연결 실패
+#
+#대신:
+#
+#  Spring Boot(app 컨테이너)
+#  ↓
+#  mysql:3306 ✅
+#  ↓
+#  MySQL 컨테이너
+#
+#  → 정상 작동
+#
+#  즉 application.yml이 localhost:3306인데 IntelliJ로 실행하면 되는 이유는 Spring Boot가 내 Mac에서 실행되기 때문.
