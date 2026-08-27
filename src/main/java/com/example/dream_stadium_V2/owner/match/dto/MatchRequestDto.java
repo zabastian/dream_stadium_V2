@@ -16,15 +16,13 @@ public class MatchRequestDto {
     @NotNull(message = "비면 안됩니다.")
     private LocalDateTime matchDate;
 
-    @NotBlank(message = "비면 안됩니다.")
-    private String homeTeam;
+    @NotNull(message = "비면 안됩니다.")
+    private Long homeTeamId;
 
-    @NotBlank(message = "비면 안됩니다.")
-    private String awayTeam;
+    @NotNull(message = "비면 안됩니다.")
+    private Long awayTeamId;
 
     @NotNull(message = "비면 안됩니다.")
     private Long stadiumId;
 
-    @NotNull(message = "비면 안돕니다.")
-    private Long teamId;
 }

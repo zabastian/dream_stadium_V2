@@ -1,10 +1,12 @@
 package com.example.dream_stadium_V2.global.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
 @AllArgsConstructor
 public class ErrorResponse {
     private final String error;

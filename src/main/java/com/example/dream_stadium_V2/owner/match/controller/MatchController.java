@@ -8,10 +8,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/owner")
 @RestController
@@ -30,4 +29,28 @@ public class MatchController {
 
         return ResponseEntity.ok().body(matchResponseDto);
     }
+
+    @PostMapping("/match/update/{matchId}") //생성 userId는 변경될 일 이 없을 예정 즉, 기존 update에 내용 추가 x
+    public ResponseEntity<MatchResponseDto> updatedMatch(
+            @Valid @RequestBody MatchRequestDto matchRequestDto,
+            @PathVariable Long matchId
+    ) {
+        MatchResponseDto matchResponseDto = matchService.updateMatch(matchRequestDto, matchId);
+        return ResponseEntity.ok().body(matchResponseDto);
+    }
+
+    @GetMapping("/match/list")
+    public ResponseEntity<List<MatchResponseDto>> selectedListMatch(
+    ) {
+        List<MatchResponseDto> matchResponseDtos = matchService.selectListMatch();
+        return ResponseEntity.ok().body(matchResponseDtos);
+    }
+
+    @DeleteMapping("/match/delete/{matchId}")
+    public ResponseEntity<Void> deletedMatch(@PathVariable Long matchId) {
+        matchService.deleteMatch(matchId);
+        return ResponseEntity.ok().build();
+    }
+
+    //selectlistmatch
 }
