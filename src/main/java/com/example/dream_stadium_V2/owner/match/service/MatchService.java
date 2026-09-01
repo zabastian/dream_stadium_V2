@@ -54,7 +54,7 @@ public class MatchService {
     @Transactional
     public MatchResponseDto updateMatch(MatchRequestDto dto, Long matchId) {
         Match match = matchRepository.findById(matchId)
-                .orElseThrow(() -> new BaseException(ErrorCode.MATCH_NOT_FOUNT));
+                .orElseThrow(() -> new BaseException(ErrorCode.MATCH_NOT_FOUND));
 
         Team homeTeam = teamRepository.findById(dto.getHomeTeamId())
                 .orElseThrow(() -> new BaseException(ErrorCode.TEAM_NOT_FOUND));
@@ -97,7 +97,7 @@ public class MatchService {
 
     public void deleteMatch(Long matchId) {
         Match match = matchRepository.findById(matchId)
-                .orElseThrow(()->new BaseException(ErrorCode.MATCH_NOT_FOUNT));
+                .orElseThrow(()->new BaseException(ErrorCode.MATCH_NOT_FOUND));
 
         matchRepository.delete(match);
     }
