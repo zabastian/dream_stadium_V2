@@ -13,7 +13,8 @@ public enum ErrorCode {
     STADIUM_NOT_FOUND("해당 경기장을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,5),
     TEAM_NOT_FOUND("해당 팀을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,6),
     MATCH_NOT_FOUND("해당 경기를 찾을 수 없습니다.", HttpStatus.NOT_FOUND,7),
-    SEAT_NOT_FOUND("해당 좌석을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,8);
+    SEAT_NOT_FOUND("해당 좌석을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,8),
+    MATCH_SEAT_NOT_FOUND("해당 경기좌석을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,9);
 
     private final String message;
     private final HttpStatus httpStatus;
