@@ -15,7 +15,8 @@ public enum ErrorCode {
     MATCH_NOT_FOUND("해당 경기를 찾을 수 없습니다.", HttpStatus.NOT_FOUND,7),
     SEAT_NOT_FOUND("해당 좌석을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,8),
     MATCH_SEAT_NOT_FOUND("해당 경기좌석을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,9),
-    COUPON_NOT_FOUND("해당 쿠폰을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,9);
+    COUPON_NOT_FOUND("해당 쿠폰을 찾을 수 없습니다.", HttpStatus.NOT_FOUND,10),
+    USER_COUPON_NOT_FOUND("해당 유저쿠폰을 찾을 수 없습니다.", HttpStatus.NOT_FOUND, 11);
 
 
     private final String message;

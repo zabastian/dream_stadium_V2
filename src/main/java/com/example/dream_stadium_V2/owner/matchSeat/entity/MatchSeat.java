@@ -16,7 +16,7 @@ public class MatchSeat {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "seats_id")
+    @JoinColumn(name = "seat_id")
     private Seat seat;
 
     @ManyToOne
