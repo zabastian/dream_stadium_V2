@@ -26,8 +26,7 @@ public class MatchSeatController {
             @AuthenticationPrincipal CustomUserPrincipal customUserPrincipal,
             @Valid @RequestBody MatchSeatRequestDto matchSeatRequestDto
             ) {
-        MatchSeatResponseDto matchSeatResponseDto = matchSeatService.createMatchSeat(customUserPrincipal.getUserId(), matchSeatRequestDto
-        );
+        MatchSeatResponseDto matchSeatResponseDto = matchSeatService.createMatchSeat(customUserPrincipal.getUserId(), matchSeatRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(matchSeatResponseDto);
     }
 
