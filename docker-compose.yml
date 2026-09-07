@@ -4,9 +4,11 @@ services:
     container_name: dream-stadium-V2
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: dream_stadium_V2
+      MYSQL_DATABASE: dream_stadium_V2_database
     ports:
       - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   app:
     build: .
@@ -15,6 +17,9 @@ services:
       - "8080:8080"
     depends_on:
       - mysql
+
+volumes:
+  mysql-data:
 # application.yml이 localhost 일 때 docker compose up -d 만 해도 된다
 
 #  1. IntelliJ 실행
