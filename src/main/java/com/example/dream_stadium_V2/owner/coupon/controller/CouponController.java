@@ -22,9 +22,10 @@ public class CouponController {
 
     @PostMapping("/coupon") // 쿠폰 생성
     public ResponseEntity<CouponResponseDto> createdCoupon(
-            @Valid @RequestBody CouponRequestDto couponRequestDto
+            @Valid @RequestBody CouponRequestDto couponRequestDto,
+            @AuthenticationPrincipal CustomUserPrincipal customUserPrincipal
             ) {
-        CouponResponseDto couponResponseDto = couponService.createCoupon(couponRequestDto);
+        CouponResponseDto couponResponseDto = couponService.createCoupon(couponRequestDto, customUserPrincipal);
         return ResponseEntity.ok().body(couponResponseDto);
     }
 

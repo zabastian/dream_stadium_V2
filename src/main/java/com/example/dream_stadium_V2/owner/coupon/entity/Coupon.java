@@ -26,10 +26,11 @@ public class Coupon extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Coupon create(String name, Long discountRate) {
+    public static Coupon create(String name, Long discountRate, User user) {
         Coupon coupon = new Coupon();
         coupon.name = name;
         coupon.discountRate = discountRate;
+        coupon.user = user;
         return coupon;
     }
 
