@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
-    List<Coupon> findByUserId(Long userId);
+    List<Coupon> findByUser_Id(Long userId);
 
 }

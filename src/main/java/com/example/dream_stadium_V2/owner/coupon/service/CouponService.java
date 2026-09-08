@@ -12,6 +12,7 @@ import com.example.dream_stadium_V2.owner.coupon.entity.Coupon;
 import com.example.dream_stadium_V2.owner.coupon.repository.CouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,12 @@ public class CouponService {
     private final CouponRepository couponRepository;
     private final AuthRepository authRepository;
 
-    public CouponResponseDto createCoupon(CouponRequestDto dto) {
+    public CouponResponseDto createCoupon(CouponRequestDto dto, CustomUserPrincipal customUserPrincipal) {
 
-        Coupon coupon  = Coupon.create(dto.getName(), dto.getDiscountRate());
+        User user = authRepository.findById(customUserPrincipal.getUserId())
+                .orElseThrow(()-> new BaseException(ErrorCode.USER_NOT_FOUND));
+
+        Coupon coupon  = Coupon.create(dto.getName(), dto.getDiscountRate(), user);
 
         couponRepository.save(coupon);
 
@@ -33,10 +37,18 @@ public class CouponService {
     }
 
     public List<CouponResponseDto> selectListCoupon(CustomUserPrincipal customUserPrincipal) {
+
+        System.out.println("principal userId = " + customUserPrincipal.getUserId());
+
         User user = authRepository.findById(customUserPrincipal.getUserId())
                 .orElseThrow(()-> new BaseException(ErrorCode.USER_NOT_FOUND));
 
-        List<Coupon> coupons = couponRepository.findByUserId(user.getId());
+
+        System.out.println("찾은 user id = " + user.getId());
+
+        List<Coupon> coupons = couponRepository.findByUser_Id(user.getId());
+
+        System.out.println("쿠폰 개수 = " + coupons.size());
 
         List<CouponResponseDto> couponResponseDtos = new ArrayList<>();
 
@@ -49,6 +61,7 @@ public class CouponService {
 
     }
 
+    @Transactional
     public CouponResponseDto updateCoupon(CouponRequestDto dto, Long couponId) {
 
         Coupon coupon = couponRepository.findById(couponId)
