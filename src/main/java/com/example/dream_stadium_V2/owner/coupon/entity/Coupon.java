@@ -3,8 +3,13 @@ package com.example.dream_stadium_V2.owner.coupon.entity;
 import com.example.dream_stadium_V2.common.user.baseentity.BaseEntity;
 import com.example.dream_stadium_V2.common.user.entity.User;
 import com.example.dream_stadium_V2.global.exception.BaseException;
+import com.example.dream_stadium_V2.owner.matchSeat.entity.MatchSeat;
+import com.example.dream_stadium_V2.owner.userCoupon.entity.UserCoupon;
 import jakarta.persistence.*;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,4 +43,7 @@ public class Coupon extends BaseEntity {
         this.name = name;
         this.discountRate = discountRate;
     }
+
+    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL)
+    private List<UserCoupon> userCoupons = new ArrayList<>();
 }

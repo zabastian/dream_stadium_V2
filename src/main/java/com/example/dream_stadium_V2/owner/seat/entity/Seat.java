@@ -1,9 +1,13 @@
 package com.example.dream_stadium_V2.owner.seat.entity;
 
 import com.example.dream_stadium_V2.common.user.baseentity.BaseEntity;
+import com.example.dream_stadium_V2.owner.matchSeat.entity.MatchSeat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.CollectionId;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,4 +27,7 @@ public class Seat extends BaseEntity {
         seat.name = name;
         return seat;
     }
+
+    @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL)
+    private List<MatchSeat> matchSeats = new ArrayList<>();
 }

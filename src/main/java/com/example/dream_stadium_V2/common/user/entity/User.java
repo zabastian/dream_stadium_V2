@@ -1,10 +1,14 @@
 package com.example.dream_stadium_V2.common.user.entity;
 
 import com.example.dream_stadium_V2.common.user.baseentity.BaseEntity;
+import com.example.dream_stadium_V2.owner.userCoupon.entity.UserCoupon;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -63,4 +67,7 @@ public class User extends BaseEntity {
   /*  public static User login(String email, String password) {
         return new User(email, password);
     }*/
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserCoupon> userCoupons = new ArrayList<>();
 }
