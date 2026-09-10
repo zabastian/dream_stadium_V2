@@ -6,7 +6,6 @@ import com.example.dream_stadium_V2.owner.coupon.dto.CouponResponseDto;
 import com.example.dream_stadium_V2.owner.coupon.service.CouponService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequestMapping("/owner")
 @RestController
 @RequiredArgsConstructor
-public class CouponController {
+public class OwnerCouponController {
 
     private final CouponService couponService;
 

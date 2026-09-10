@@ -10,14 +10,12 @@ public class UserCouponResponseDto {
     private Long id;
     private Long userId;
     private Long couponId;
-    private String name;
     private boolean isUsed;
 
-    public UserCouponResponseDto(Long id, Long userId, Long couponId, String name, boolean isUsed) {
+    public UserCouponResponseDto(Long id, Long userId, Long couponId, boolean isUsed) {
         this.id = id;
         this.userId = userId;
         this.couponId = couponId;
-        this.name = name;
         this.isUsed = isUsed;
     }
 
