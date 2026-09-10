@@ -9,13 +9,6 @@ import lombok.Getter;
 public class UserCouponRequestDto {
 
     @NotNull
-    private Long userId;
-
-    @NotNull
     private Long couponId;
 
-    @NotBlank
-    private String name;
-
-    private boolean isUsed;
 }

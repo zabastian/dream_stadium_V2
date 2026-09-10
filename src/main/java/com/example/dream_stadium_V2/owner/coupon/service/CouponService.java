@@ -73,10 +73,31 @@ public class CouponService {
     }
 
     public void deleteCoupon(Long couponId) {
+
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(()-> new BaseException(ErrorCode.USER_NOT_FOUND));
 
         couponRepository.delete(coupon);
+    }
+
+    public List<CouponResponseDto> selectCustomerListCoupon() {
+
+        List<Coupon> coupon = couponRepository.findAll();
+
+        List<CouponResponseDto> couponList = new ArrayList<>();
+
+        for (Coupon coupons : coupon) {
+            couponList.add(
+                    new CouponResponseDto(
+                            coupons.getId(),
+                            coupons.getName(),
+                            coupons.getDiscountRate()
+                    )
+            );
+
+        }
+
+        return couponList;
     }
 
 }

@@ -36,3 +36,7 @@
 
   recaptcha:
     secret-key : 6Lc3q-wsAAAAACKFOgH86RuwDYOrx_F_euRk3nCK
+
+  logging:
+    level:
+      org.hibernate.orm.jdbc.bind: TRACE
