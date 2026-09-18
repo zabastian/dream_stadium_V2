@@ -39,7 +39,7 @@ public class CustomerUserCouponController {
 
     }
 
-    @PostMapping("/userCoupon/used/{userCouponId}") // 발급된 유저쿠폰 사용 로직
+    @PostMapping("/userCoupon/used/{userCouponId}") // 발급된 유저쿠폰 사용 로직 (여기서 말고 reservation에 사용해야 함)
     public ResponseEntity<UserCouponResponseDto> usedUserCoupon(
             @PathVariable Long userCouponId
     ) {

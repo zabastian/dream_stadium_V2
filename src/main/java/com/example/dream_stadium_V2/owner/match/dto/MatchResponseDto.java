@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 @JsonPropertyOrder({
         "matchId",
-        "cost",
         "matchDate",
         "homeTeamId",
         "awayTeamId",
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 public class MatchResponseDto {
 
     private Long matchId;
-    private Long cost;
     private LocalDateTime matchDate;
     private Long homeTeamId;
     private Long awayTeamId;
@@ -28,7 +26,6 @@ public class MatchResponseDto {
 
     public MatchResponseDto(Match match) {
         this.matchId = match.getId();
-        this.cost = match.getCost();
         this.matchDate = match.getMatchDate();
         this.homeTeamId = match.getHomeTeam().getId();
         this.awayTeamId = match.getAwayTeam().getId();

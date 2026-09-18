@@ -44,7 +44,7 @@ public class MatchService {
         Stadium stadium = stadiumRepository.findById(dto.getStadiumId())
                 .orElseThrow(()-> new BaseException(ErrorCode.STADIUM_NOT_FOUND));
 
-        Match match = Match.create(dto.getCost(), dto.getMatchDate(), homeTeam, awayTeam, user, stadium);
+        Match match = Match.create(dto.getMatchDate(), homeTeam, awayTeam, user, stadium);
 
         Match savedMatch = matchRepository.save(match);
 
@@ -65,7 +65,7 @@ public class MatchService {
         Stadium stadium = stadiumRepository.findById(dto.getStadiumId())
                 .orElseThrow(() -> new BaseException(ErrorCode.STADIUM_NOT_FOUND));
 
-        match.update(match.getCost(), match.getMatchDate(), homeTeam, awayTeam, stadium);
+        match.update(match.getMatchDate(), homeTeam, awayTeam, stadium);
 
         return new MatchResponseDto(match);
     }

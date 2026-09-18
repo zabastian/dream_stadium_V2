@@ -4,10 +4,12 @@ import com.example.dream_stadium_V2.owner.match.entity.Match;
 import com.example.dream_stadium_V2.owner.seat.entity.Seat;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CollectionId;
 
 @Entity
 @Getter
+@Setter
 public class MatchSeat {
 
     @Id
