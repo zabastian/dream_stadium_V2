@@ -31,7 +31,7 @@ public class UserCoupon extends BaseEntity {
     */
 
     @Column(name = "is_used")
-    private boolean isUsed;
+    private boolean isUsed = false;
 
     public static UserCoupon create(User user, Coupon coupon, boolean isUsed) {
         UserCoupon userCoupon = new UserCoupon();

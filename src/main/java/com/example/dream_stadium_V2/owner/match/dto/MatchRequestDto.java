@@ -11,9 +11,6 @@ import java.time.LocalDateTime;
 public class MatchRequestDto {
 
     @NotNull(message = "비면 안됩니다.")
-    private Long cost;
-
-    @NotNull(message = "비면 안됩니다.")
     private LocalDateTime matchDate;
 
     @NotNull(message = "비면 안됩니다.")

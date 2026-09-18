@@ -24,9 +24,6 @@ public class Match extends BaseEntity {
     @Column(name = "match_id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "cost", nullable = false)
-    private Long cost;
-
     @Column(name = "match_date", nullable = false)
     private LocalDateTime matchDate;
 
@@ -50,9 +47,8 @@ public class Match extends BaseEntity {
     @JoinColumn(name = "team_id")
     private Team team;*/
 
-    public static Match create(Long cost, LocalDateTime matchDate, Team homeTeam, Team awayTeam, User user, Stadium stadium) {
+    public static Match create(LocalDateTime matchDate, Team homeTeam, Team awayTeam, User user, Stadium stadium) {
         Match match = new Match();
-        match.cost = cost;
         match.matchDate = matchDate;
         match.homeTeam = homeTeam;
         match.awayTeam = awayTeam;
@@ -62,13 +58,11 @@ public class Match extends BaseEntity {
     }
 
     public void update(
-            Long cost,
             LocalDateTime matchDate,
             Team homeTeam,
             Team awayTeam,
             Stadium stadium
     ) {
-        this.cost = cost;
         this.matchDate = matchDate;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
