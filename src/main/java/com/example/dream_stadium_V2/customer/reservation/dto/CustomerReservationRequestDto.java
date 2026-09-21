@@ -8,7 +8,6 @@ import lombok.Getter;
 @Getter
 public class CustomerReservationRequestDto {
 
-        @NotNull
         private Long UserCouponId;
 
 }
