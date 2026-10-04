@@ -20,7 +20,7 @@ public class OwnerReservationController {
 
     private final ReservationService ownerReservationService;
 
-    @PostMapping("/create")
+    @PostMapping("/reservation/create")
     public ResponseEntity<OwnerReservationResponseDto> createdReservation(
             @AuthenticationPrincipal CustomUserPrincipal customUserPrincipal,
             @Valid @RequestBody OwnerReservationRequestDto ownerReservationRequestDto
