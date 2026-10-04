@@ -18,9 +18,11 @@ import com.example.dream_stadium_V2.owner.userCoupon.entity.UserCoupon;
 import com.example.dream_stadium_V2.owner.userCoupon.repository.UserCouponRepository;
 import com.example.dream_stadium_V2.owner.userCoupon.service.UserCouponService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.core.ObjectReadContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,9 +105,24 @@ public class ReservationService {
     @Transactional
     public CustomerReservationResponseDto createCustomerReservation(Long reservationId, Long userCouponId, Long userId) {
 
-        Reservation reservation = reservationRepository.findByIdWithMatchSeat(reservationId)
+        /* 분산락 만약에 matchSeatId에 대해서
+
+        Reservation reservation2 = reservationRepository.findByIdWithMatchSeat(reservationId)
                 .orElseThrow(() -> new BaseException(ErrorCode.RESERVATION_NOT_FOUND));
 
+        MatchSeat matchSeat = reservation.getMatchSeat();
+
+        // 최신 DB 상태로 갱신하면서 비관적 쓰기 락 획득
+        entityManager.refresh(matchSeat, LockModeType.PESSIMISTIC_WRITE);
+
+        */
+
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new BaseException(ErrorCode.RESERVATION_NOT_FOUND));
+
+        if (reservation.isRemained() == false) {
+            throw new BaseException(ErrorCode.RESERVATION_FAILED);
+        }
 
         UserCoupon userCoupon = null;
 
@@ -125,19 +142,43 @@ public class ReservationService {
             userCoupon.updateUserCoupon(true);
         }
 
-        Long capacity = reservation.getMatchSeat().getCapacity();
+        MatchSeat matchSeat = matchSeatRepository.findByIdForUpdate(reservation.getMatchSeat().getId())
+                .orElseThrow(()-> new BaseException(ErrorCode.MATCH_SEAT_NOT_FOUND));
+        /*
+        try {
+            Thread.sleep(3000); // 테스트용: 락을 3초 동안 유지
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+        }
+        */
+        long capacity = matchSeat.getCapacity();
+
+        if (capacity <= 0) {
+            throw new BaseException(ErrorCode.RESERVATION_FAILED);
+        } else {
+            matchSeat.setCapacity(capacity - 1);
+        }
+
+        User customer = authRepository.findById(userId)
+                .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+
+        Reservation customerReservation = Reservation.createCustomer(
+                reservation.getName(),
+                customer,
+                matchSeat,
+                cost,
+                true
+        );
+
+        /* 아래는 비관락 적용 안할 시 로직
+        //Long capacity = reservation.getMatchSeat().getCapacity();
 
         if (capacity <= 0) {
             throw new BaseException(ErrorCode.RESERVATION_FAILED);
         } else {
             reservation.getMatchSeat().setCapacity(capacity - 1);
         }
-
-        /*User user = authRepository.findById(userId)
-                        .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
-
-        reservation.setCustomer(user);
-        reservation.setReserved(true);*/
 
         User customer = authRepository.findById(userId)
                 .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
@@ -149,6 +190,17 @@ public class ReservationService {
                 cost,
                 true
         );
+
+        */
+
+
+        /* entity 하나 추가하는 방식
+        User user = authRepository.findById(userId)
+                        .orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+
+        reservation.setCustomer(user);
+        reservation.setReserved(true);
+        */
 
         reservationRepository.save(customerReservation);
 
@@ -185,5 +237,17 @@ public class ReservationService {
         }
 
         return responseDtos;
+    }
+
+    @Transactional
+    public void deleteCustomerReservation(Long reservationId) {
+
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(()-> new BaseException(ErrorCode.RESERVATION_NOT_FOUND));
+
+        reservation.setReserved(false);
+
+        reservationRepository.save(reservation);
+
     }
 }
