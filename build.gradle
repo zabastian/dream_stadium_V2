@@ -40,6 +40,8 @@ dependencies {
     // @Valid및 NotBlank 사용
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     // 네이버 Oauth2.0 연결
+    implementation 'org.redisson:redisson-spring-boot-starter:4.7.0'
+    // 분산락 적용
 }
 
 tasks.named('test') {

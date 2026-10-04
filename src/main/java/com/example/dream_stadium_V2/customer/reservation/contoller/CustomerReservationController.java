@@ -4,6 +4,7 @@ import com.example.dream_stadium_V2.common.auth.oauth.CustomOAuth2UserService;
 import com.example.dream_stadium_V2.customer.reservation.dto.CustomerReservationRequestDto;
 import com.example.dream_stadium_V2.customer.reservation.dto.CustomerReservationResponseDto;
 import com.example.dream_stadium_V2.global.spring_security.CustomUserPrincipal;
+import com.example.dream_stadium_V2.owner.reservation.service.ReservationLockService;
 import com.example.dream_stadium_V2.owner.reservation.service.ReservationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 public class CustomerReservationController {
 
     private final ReservationService reservationService;
+    private final ReservationLockService reservationLockService;
 
     @GetMapping("/reservation/list")     //owner의 reservation 조회하기
     public ResponseEntity<List<CustomerReservationResponseDto>> selectedListReservation() {
@@ -36,7 +38,18 @@ public class CustomerReservationController {
             @AuthenticationPrincipal CustomUserPrincipal customUserPrincipal
             ) {
 
-        CustomerReservationResponseDto customerReservationResponseDto = reservationService.createCustomerReservation(reservationId, customerReservationRequestDto.getUserCouponId(), customUserPrincipal.getUserId());
+        /*CustomerReservationResponseDto customerReservationResponseDto =
+                reservationService.createCustomerReservation(
+                        reservationId,
+                        customerReservationRequestDto.getUserCouponId(),
+                        customUserPrincipal.getUserId()
+                );*/
+        CustomerReservationResponseDto customerReservationResponseDto =
+                reservationLockService.createCustomerReservation(
+                        reservationId,
+                        customerReservationRequestDto.getUserCouponId(),
+                        customUserPrincipal.getUserId()
+                );
         return ResponseEntity.ok().body(customerReservationResponseDto);
 
     }
@@ -47,6 +60,14 @@ public class CustomerReservationController {
     ) {
         List<CustomerReservationResponseDto> customerReservationResponseDtos = reservationService.selectListCustomerReservation(customUserPrincipal.getUserId());
         return ResponseEntity.ok().body(customerReservationResponseDtos);
+    }
+
+    @PostMapping("/reservation/delete/{customerReservationId}") // 소프트 딜리트 로직(고객 예약 취소)
+    public ResponseEntity<Void> deletedCustomerReservation(
+            @PathVariable Long customerReservationId
+    ) {
+        reservationService.deleteCustomerReservation(customerReservationId);
+        return ResponseEntity.noContent().build();
     }
 
 
