@@ -1,4 +1,4 @@
-# dream_stadium
+# dream_stadium_V2
 
 # 고객이 경기장 예매에 불편함을 겪지 않도록 만든 개인 프로젝트
 
