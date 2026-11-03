@@ -15,7 +15,7 @@
 - 쿠폰기능
 - docker-compose 적용 및 CI/CD 파이프라인 구현
 - 부하 테스트
-- NABER Oauth2.0 로그인 기능
+- NAVER Oauth2.0 로그인 기능
 - 구글 recaptcha 기능
 
 
