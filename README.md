@@ -51,16 +51,20 @@
 
 ## 💻 ERD
 - [ERD 링크](https://www.erdcloud.com/d/HwkrJhhb3vdgXWRGD)
-- ![ERD](erd2.png)
   
 ## 📑 API 명세서
-- [API 명세서](https://docs.google.com/spreadsheets/d/11Qq5HuWawa5z2Xr85AcOYGalAq86K45NjR2TovMdyxE/edit?gid=0#gid=0)
+- [API 명세서](https://docs.google.com/spreadsheets/d/11Qq5HuWawa5z2Xr85AcOYGalAq86K45NjR2TovMdyxE/edit?pli=1&gid=949175960#gid=949175960)
 
-## 📜 트러블 슈팅 
-- [aws 배포](https://qlgh2gh.tistory.com/55)
-- [refreshToken 오류](https://qlgh2gh.tistory.com/56)
+## 📜 트러블 슈팅 및 정리
+- [Oauth2.0 정리](https://qlgh2gh.tistory.com/73)
+- [구글 recaptcha](https://qlgh2gh.tistory.com/74)
 - [orphanRemoval = true 오류](https://qlgh2gh.tistory.com/54)
 - [유저쿠폰 다운로드 문제점](https://qlgh2gh.tistory.com/57)
+- [UserCoupon 수정](https://qlgh2gh.tistory.com/77)
 - [알림 문제](https://qlgh2gh.tistory.com/58)
 - [Jmeter(분산락, security 테스트 ) + Jmeter 설정문제](https://qlgh2gh.tistory.com/59)
+- [jmeter(새로운 예약 시스템 적용) - 부하 테스트 락x](https://qlgh2gh.tistory.com/79)
+- [jmeter(새로운 예약 시스템 적용) - 부하 테스트 낙관락/분산락](https://qlgh2gh.tistory.com/80)
+- [배포 과정 GHCR + git hub 무중단 배포(chapter 1) ](https://qlgh2gh.tistory.com/82)
+- [깃허브 ci/cd + nginx + https:// 설정 (chapter 2)](https://qlgh2gh.tistory.com/83)
 ---
